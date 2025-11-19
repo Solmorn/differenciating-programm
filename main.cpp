@@ -22,9 +22,19 @@ int main() {
     Tree tree = {};
     INIT_TREE(tree);
 
+    Tree diff_tree = {};
+    INIT_TREE(diff_tree);
+
     ParseTreeFromFile(&tree, tree_condition);
 
+    CalculateTree(&tree);
+
+    FillTreeWithDiff(&diff_tree, &tree);
+
+    CalculateTree(&diff_tree);
+
     KillTree(&tree);
+    KillTree(&diff_tree);
 
     printf("\n\nCOMMIT_ME_I_WORK!!!\n\n");
 

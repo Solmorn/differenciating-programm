@@ -36,8 +36,19 @@ static TreeErr StringToUnion(Tree* tree, char* pos, size_t len, tree_type* val, 
     } else if (IsOperation(pos, len, val)) {
         *val_t = Op;
     } else {
-        tree->vars[tree->number_of_variables].name = pos;
-        tree->number_of_elements++;
+        bool found = false;
+        for (size_t index = 0; index < tree->number_of_variables; index++) {
+            if (!strncmp(tree->vars[index].name, pos, len)) {
+                found = true;
+                (*val).var_ind = index;
+            }
+        }
+        if (!found) {
+            tree->vars[tree->number_of_variables].name    = pos;
+            (*val).var_ind = tree->number_of_variables;
+            tree->number_of_variables++;
+        }
+        *val_t = Var;
     }
     return Ok;
 }
@@ -58,8 +69,6 @@ static TreeNode* ParseTreeFromBuffer(Tree* tree, TreeNode* parent, char** pos) {
 
         tree_type val = {.op = NoOp};
         ValueType val_t = NoType;
-
-        printf("__%d__%d_\n", cur_str_len, val_t);
 
         StringToUnion(tree, (*pos)+1, cur_str_len - 2, &val, &val_t); // -2 caused by " "
 

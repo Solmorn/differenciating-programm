@@ -21,7 +21,8 @@ enum TreeErr {
     DataPtrError,
     ParrentError,
     ParentSonError,
-    TwoSonsError
+    TwoSonsError,
+    VariableError
 
 
 };

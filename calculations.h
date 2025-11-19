@@ -14,7 +14,7 @@
 #define CYAN    "\033[1;36m"
 
 
-TreeErr NodesInsertAtTheEnd(TreeNode *node, char *name, char *question);
-TreeErr AddNewCharacter(TreeNode* node);
-TreeErr Akinate(Tree* tree, TreeNode* node);
+
+TreeErr CalculateTree(Tree* tree);
+void FillTreeWithDiff(Tree* diff_tree, Tree* tree);
 #endif
