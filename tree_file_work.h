@@ -9,5 +9,7 @@
 
 TreeErr ParseTreeFromFile(Tree* tree, const char* filename);
 void PrintFileNodePrefix(Tree* tree, TreeNode* node, FILE* file);
-
+FILE* OpenTex(const char* filename);
+void CloseTex(FILE* file);
+void AddTreeToTexFile(Tree* tree, FILE* file);
 #endif

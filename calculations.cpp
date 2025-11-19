@@ -168,6 +168,7 @@ static TreeNode* Differenciate(Tree* diff_tree, TreeNode* parent, TreeNode* node
         case Num:
             return AlocateTreeNode(parent, {.num = 0}, Num);
     }
+    return nullptr;
 }
 
 void FillTreeWithDiff(Tree* diff_tree, Tree* tree) {

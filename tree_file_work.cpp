@@ -154,3 +154,69 @@ void PrintFileNodePrefix(Tree* tree, TreeNode* node, FILE* file) {
 
     fprintf(file, " ) ");
 }
+
+FILE* OpenTex(const char* filename) {
+    FILE* file = fopen(filename, "w");
+    fprintf(file,   "\\documentclass[12pt,a4paper]{extreport}\n"
+                    "\\usepackage{amsmath, amssymb}\n"
+                    "\\usepackage[T2A]{fontenc}\n"
+                    "\\usepackage[utf8]{inputenc}\n"
+                    "\\begin{document}\n\n");
+    return file;
+}
+
+void CloseTex(FILE* file) {
+    fprintf(file, "\n\\end{document}\n");
+    fclose(file);
+}
+
+static void MakeTexFromSubtree(Tree* tree, TreeNode* node, FILE* file) {
+    fprintf(file, "\\left(");
+
+    switch (node->value_type) {
+        case Op:
+            switch (node->data.op) {
+                case Sub: {
+                    MakeTexFromSubtree(tree, node->son1, file);
+                    fprintf(file, "-");
+                    MakeTexFromSubtree(tree, node->son2, file);
+                    break;
+                }
+                case Add: {
+                    MakeTexFromSubtree(tree, node->son1, file);
+                    fprintf(file, "+");
+                    MakeTexFromSubtree(tree, node->son2, file);
+                    break;
+                }
+                case Mul: {
+                    MakeTexFromSubtree(tree, node->son1, file);
+                    fprintf(file, "\\cdot");
+                    MakeTexFromSubtree(tree, node->son2, file);
+                    break;
+                }
+                case Div: {
+                    fprintf(file, "\\frac{");
+                    MakeTexFromSubtree(tree, node->son1, file);
+                    fprintf(file, "}{");
+                    MakeTexFromSubtree(tree, node->son2, file);
+                    fprintf(file, "}");
+                    break;
+                }
+            }
+            break;
+        case Var:
+            fprintf(file, "%s", tree->vars[node->data.var_ind].name);
+            break;
+        case Num:
+            fprintf(file, "%.2lf", node->data.num);
+            break;
+    }
+
+    fprintf(file, "\\right)");
+}
+
+void AddTreeToTexFile(Tree* tree, FILE* file) {
+    fprintf(file, "$");
+    MakeTexFromSubtree(tree, tree->root_node_ptr, file);
+    fprintf(file, "$\\\\\n");
+}
