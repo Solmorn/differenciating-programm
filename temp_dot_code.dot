@@ -1,0 +1,129 @@
+digraph G {
+    orientation=portrait;
+    rankdir=TB;
+node0 [rank=1,
+shape=plaintext,
+label=<  <table BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightgray">
+    <tr><td>parent: (nil)</td></tr>
+    <tr><td BGCOLOR="lightblue">ptr: 0x5659c3f0ccf0</td></tr>
+    <tr><td BGCOLOR="lightyellow">type: "OP"</td></tr>
+    <tr><td BGCOLOR="lightgreen">data: "*"</td></tr>
+    <tr>
+      <td>
+        <table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+          <tr><td>left: 0x5659c3f0cd30</td><td>right: 0x5659c3f0cdf0</td></tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+>
+penwidth=3, color=black];
+node1 [rank=2,
+shape=plaintext,
+label=<  <table BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightgray">
+    <tr><td>parent: 0x5659c3f0ccf0</td></tr>
+    <tr><td BGCOLOR="lightblue">ptr: 0x5659c3f0cd30</td></tr>
+    <tr><td BGCOLOR="lightyellow">type: "OP"</td></tr>
+    <tr><td BGCOLOR="lightgreen">data: "+"</td></tr>
+    <tr>
+      <td>
+        <table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+          <tr><td>left: 0x5659c3f0cd70</td><td>right: 0x5659c3f0cdb0</td></tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+>
+penwidth=3, color=gray];
+node2 [rank=3,
+shape=plaintext,
+label=<  <table BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightgray">
+    <tr><td>parent: 0x5659c3f0cd30</td></tr>
+    <tr><td BGCOLOR="lightblue">ptr: 0x5659c3f0cd70</td></tr>
+    <tr><td BGCOLOR="lightyellow">type: "NUM"</td></tr>
+    <tr><td BGCOLOR="lightgreen">data: "3.000000"</td></tr>
+    <tr>
+      <td>
+        <table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+          <tr><td>left: (nil)</td><td>right: (nil)</td></tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+>
+penwidth=3, color=yellow];
+node3 [rank=3,
+shape=plaintext,
+label=<  <table BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightgray">
+    <tr><td>parent: 0x5659c3f0cd30</td></tr>
+    <tr><td BGCOLOR="lightblue">ptr: 0x5659c3f0cdb0</td></tr>
+    <tr><td BGCOLOR="lightyellow">type: "NUM"</td></tr>
+    <tr><td BGCOLOR="lightgreen">data: "4.000000"</td></tr>
+    <tr>
+      <td>
+        <table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+          <tr><td>left: (nil)</td><td>right: (nil)</td></tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+>
+penwidth=3, color=yellow];
+node4 [rank=2,
+shape=plaintext,
+label=<  <table BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightgray">
+    <tr><td>parent: 0x5659c3f0ccf0</td></tr>
+    <tr><td BGCOLOR="lightblue">ptr: 0x5659c3f0cdf0</td></tr>
+    <tr><td BGCOLOR="lightyellow">type: "OP"</td></tr>
+    <tr><td BGCOLOR="lightgreen">data: "-"</td></tr>
+    <tr>
+      <td>
+        <table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+          <tr><td>left: 0x5659c3f0ce30</td><td>right: 0x5659c3f0ce70</td></tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+>
+penwidth=3, color=gray];
+node5 [rank=3,
+shape=plaintext,
+label=<  <table BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightgray">
+    <tr><td>parent: 0x5659c3f0cdf0</td></tr>
+    <tr><td BGCOLOR="lightblue">ptr: 0x5659c3f0ce30</td></tr>
+    <tr><td BGCOLOR="lightyellow">type: "NUM"</td></tr>
+    <tr><td BGCOLOR="lightgreen">data: "8.000000"</td></tr>
+    <tr>
+      <td>
+        <table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+          <tr><td>left: (nil)</td><td>right: (nil)</td></tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+>
+penwidth=3, color=yellow];
+node6 [rank=3,
+shape=plaintext,
+label=<  <table BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightgray">
+    <tr><td>parent: 0x5659c3f0cdf0</td></tr>
+    <tr><td BGCOLOR="lightblue">ptr: 0x5659c3f0ce70</td></tr>
+    <tr><td BGCOLOR="lightyellow">type: "NUM"</td></tr>
+    <tr><td BGCOLOR="lightgreen">data: "10.000000"</td></tr>
+    <tr>
+      <td>
+        <table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+          <tr><td>left: (nil)</td><td>right: (nil)</td></tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+>
+penwidth=3, color=yellow];
+node0 -> node1 [color=green, weight=2];
+node1 -> node2 [color=green, weight=2];
+node1 -> node3 [color=green, weight=2];
+node0 -> node4 [color=green, weight=2];
+node4 -> node5 [color=green, weight=2];
+node4 -> node6 [color=green, weight=2];
+}
