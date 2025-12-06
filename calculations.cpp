@@ -413,13 +413,16 @@ void FillTreeWithOrederedDiff(Tree* ordered_diff_tree, Tree* tree, size_t diff_n
     TreeDump(ordered_diff_tree, HTMLFileMode, "Func: %s\nDifferenciated %lu times tree\n", __func__, diff_number);
 }
 
-/*
+
 static TreeNode* MakeZeroTailorNode(Tree* tailor_tree, TreeNode* node) {
     ADD(num(0), mul(div(copy(node), num(1)), pow(sub(x0, x), num(0))));
 }
 
-static void AddNextTailorPart(Tree* tailor_tree) {
-
+static void AddNextTailorPart(Tree* tailor_tree, size_t tailor_number) {
+    new_root = add(tailor_tree->root, mul(div(diff(tailor_tree->root), num(prev_num*tailor_number)), 
+            pow(sub(x0, x), num(prev_num*tailor_number))));
+    KillSubTree(tailor_tree->root);
+    tailor_tree->root = new_root; nodes?
 }
 
 void MakeTailor(Tree* tailor_tree, Tree* tree, size_t tailor_number) {
@@ -431,4 +434,3 @@ void MakeTailor(Tree* tailor_tree, Tree* tree, size_t tailor_number) {
     }
 
 }
-    */
