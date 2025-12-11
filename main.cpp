@@ -16,28 +16,34 @@
 
 
 int main() {
-    const char* tex_filename = "main.tex";
-    const char* tree_condition = "tree_easy.txt";
-    //const char* tree_condition = "tree_sample.txt";
+    const char* tex_filename        = "main.tex";
+    const char* tree_infix          = "tree_infix.txt";
+    const char* taylor_graph_params = "taylor_graph_params.txt";
 
     FILE* tex_file = OpenTex(tex_filename);
 
-    Tree tree = {};
-    INIT_TREE(tree);
+    Tree infix_tree = {};
+    INIT_TREE(infix_tree);
 
     Tree diff_tree = {};
     INIT_TREE(diff_tree);
 
-    ParseTreeFromFile(&tree, tree_condition);
-    AddTreeToTexFile(&tree, tex_file);
-    CalculateTree(&tree);
+    Tree taylor_tree = {};
+    INIT_TREE(taylor_tree);
 
-    FillTreeWithDiff(&diff_tree, &tree);
-    AddTreeToTexFile(&diff_tree, tex_file);
-    CalculateTree(&diff_tree);
+    InfixParseTreeFromFile(&infix_tree, tree_infix);
+    //AddTreeToTexFile(&infix_tree, tex_file);
+    //CalculateTree(&infix_tree);
 
-    KillTree(&tree);
+
+    FillTreeWithOrederedDiff(&diff_tree, &infix_tree, 2, tex_file);
+    //CalculateTree(&diff_tree);
+
+    TaylorResearch(&taylor_tree, &infix_tree, 0, tex_file, taylor_graph_params);
+
     KillTree(&diff_tree);
+    KillTree(&infix_tree);
+    KillTree(&taylor_tree);
 
     CloseTex(tex_file);
 

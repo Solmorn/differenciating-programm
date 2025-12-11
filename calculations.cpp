@@ -6,6 +6,7 @@
 
 
 #include "calculations.h"
+#include "tree_file_work.h"
 
 
 #define MAX_LINE_SIZE_READING "29"
@@ -13,6 +14,7 @@
 static const double EPSILON_FOR_CALCULATIONS = 0.000001;
 static const double CONST_E                  = exp(1.0);
 static const double CONST_PI                 = 3.14159265358979323846;
+static bool AreThereVariable(TreeNode* node);
 
 
 #define CALLOC_ANSWER(ptr, size)                         \
@@ -126,7 +128,7 @@ TreeErr CalculateTree(Tree* tree) {
 
     AskVars(tree);
 
-    printf(GREEN "\n%lf\n" RESET, CalculateNode(tree, tree->root_node_ptr));
+    printf(GREEN "\n%.3g\n" RESET, CalculateNode(tree, tree->root_node_ptr));
 
     return Ok;
 }
@@ -145,97 +147,146 @@ static TreeNode* CopySubTree(Tree* tree, TreeNode* parent, TreeNode* node) {
 }
 
 
-#define CL_ CopySubTree(tree, node, node->son1)
-#define CR_ CopySubTree(tree, node, node->son2)
-
-#define DL_ Differenciate(tree, node->son1, var_ind)
-#define DR_ Differenciate(tree, node->son2, var_ind)
-
-#define NUM_(number)     AlocateTreeNode(tree, node, {.num = number},  Num)
-
-#define    ADD_(son1, son2) AlocateTreeNode(tree, node, {.op  = Add},      Op, son1, son2)
-#define    SUB_(son1, son2) AlocateTreeNode(tree, node, {.op  = Sub},      Op, son1, son2)
-#define    MUL_(son1, son2) AlocateTreeNode(tree, node, {.op  = Mul},      Op, son1, son2)
-#define    DIV_(son1, son2) AlocateTreeNode(tree, node, {.op  = Div},      Op, son1, son2)
-#define    POW_(son1, son2) AlocateTreeNode(tree, node, {.op  = Pow},      Op, son1, son2)
-#define     LN_(son1)       AlocateTreeNode(tree, node, {.op  = Ln},       Op, son1, NUM_(0))
-#define    SIN_(son1)       AlocateTreeNode(tree, node, {.op  = Sin},      Op, son1, NUM_(0))
-#define    COS_(son1)       AlocateTreeNode(tree, node, {.op  = Cos},      Op, son1, NUM_(0))
-#define     TG_(son1)       AlocateTreeNode(tree, node, {.op  = Tg},       Op, son1, NUM_(0))
-#define ARCSIN_(son1)       AlocateTreeNode(tree, node, {.op  = Arcsin},   Op, son1, NUM_(0))
-#define ARCCOS_(son1)       AlocateTreeNode(tree, node, {.op  = Arccos},   Op, son1, NUM_(0))
-#define  ARCTG_(son1)       AlocateTreeNode(tree, node, {.op  = Arctg},    Op, son1, NUM_(0))
-#define     SH_(son1)       AlocateTreeNode(tree, node, {.op  = Sh},       Op, son1, NUM_(0))
-#define     CH_(son1)       AlocateTreeNode(tree, node, {.op  = Ch},       Op, son1, NUM_(0))
-#define     TH_(son1)       AlocateTreeNode(tree, node, {.op  = Th},       Op, son1, NUM_(0))
+#include "dsl_on.h"
 
 
 
+static TreeNode* Differenciate(Tree* tree, TreeNode* node, size_t var_ind, FILE* file) {
+    TreeNode* ret_ptr = nullptr;
+    if (file)  {
+        fprintf(file, "\nAHAHAHAHAHHA\n"
+                          "\\begin{dmath*}\n    \\frac{d}{dx}\\left(");
+        MakeTexFromSubtree(tree, node, file);
+        fprintf(file, "\\right) = ");
+    }
 
-static TreeNode* Differenciate(Tree* tree, TreeNode* node, size_t var_ind) {
     switch (node->value_type) {
         case Op:
             switch (node->data.op) {
                 case Sub:
-                    return SUB_(DL_, DR_);
+                    IF_F(SUB_P(DL_P, 
+                               DR_P, 0))
+                    ret_ptr = SUB_(DL_, DR_); break;
                 case Add:
-                    return ADD_(DL_, DR_);
+                    IF_F(ADD_P(DL_P, 
+                               DR_P, 0))
+                    ret_ptr = ADD_(DL_, DR_); break;
                 case Mul:
-                    return ADD_(MUL_(DL_, CR_), MUL_(CL_, DR_));
+                    IF_F(ADD_P(MUL_P(DL_P, 
+                                     CR_P, 0), 
+                               MUL_P(CL_P, 
+                                     DR_P, 0), 0))
+                    ret_ptr = ADD_(MUL_(DL_, CR_), MUL_(CL_, DR_)); break;
                 case Div:
-                    return DIV_(SUB_(MUL_(DL_, CR_), MUL_(CL_, DR_)), POW_(CR_, NUM_(2)));
+                    IF_F(DIV_P(SUB_P(MUL_P(DL_P,
+                                           CR_P, 0),
+                                     MUL_P(CL_P, 
+                                           DR_P, 0), 0),
+                               POW_P(CR_P, 
+                                     NUM_P(2.0))))
+                    ret_ptr = DIV_(SUB_(MUL_(DL_, CR_), MUL_(CL_, DR_)), POW_(CR_, NUM_(2.0))); break;
                 case Pow:
-                    return MUL_(POW_(CL_, CR_), ADD_(MUL_(DIV_(DL_, CL_), CR_), MUL_(DR_, LN_(CL_))));
+                    if (AreThereVariable(node->son1) &&  AreThereVariable(node->son2)) {
+                        IF_F(MUL_P(POW_P(CL_P, 
+                                         CR_P), 
+                                   ADD_P(MUL_P(DIV_P(DL_P, 
+                                                     CL_P), 
+                                               CR_P, 0), 
+                                         MUL_P(DR_P, 
+                                               LN_P(CL_P), 0), 0), 0))
+                        ret_ptr = MUL_(POW_(CL_, CR_), ADD_(MUL_(DIV_(DL_, CL_), CR_), MUL_(DR_, LN_(CL_))));
+                    } else if (!AreThereVariable(node->son1) &&  AreThereVariable(node->son2)) {
+                        IF_F(MUL_P(POW_P(CL_P, 
+                                         CR_P), 
+                             MUL_P(DR_P, 
+                                   LN_P(CL_P), 0), 0))
+                        ret_ptr = MUL_(POW_(CL_, CR_), MUL_(DR_, LN_(CL_)));
+                    } else if (AreThereVariable(node->son1) &&  !AreThereVariable(node->son2)) {
+                        IF_F(MUL_P(CR_P, 
+                                   MUL_P(POW_P(CL_P, 
+                                               SUB_P(CR_P, 
+                                                     NUM_P(1.0), 0)), 
+                                        DL_P, 0), 0))
+                        ret_ptr = MUL_(CR_, MUL_(POW_(CL_, SUB_(CR_, NUM_(1.0))), DL_));
+                    } else ret_ptr = NUM_(0.0);
+                    break;
                 case Ln:
-                    return DIV_(DL_, CL_);
+                    IF_F(DIV_P(DL_P, 
+                               CL_P))
+                    ret_ptr = DIV_(DL_, CL_); break;
                 case Sin:
-                    return MUL_(DL_, COS_(CL_));    
+                    IF_F(MUL_P(DL_P, 
+                         COS_P(CL_P), 0))
+                    ret_ptr = MUL_(DL_, COS_(CL_)); break;
                 case Cos:
-                    return SUB_(NUM_(0), MUL_(DL_, SIN_(CL_)));        
+                    IF_F(SUB_P(NUM_P(0.0), 
+                               MUL_P(DL_P, 
+                                     SIN_P(CL_P), 0), 0))
+                    ret_ptr = SUB_(NUM_(0.0), MUL_(DL_, SIN_(CL_))); break;     
                 case Tg:
-                    return DIV_(DL_, POW_(COS_(CL_), NUM_(2)));
+                    IF_F(DIV_P(DL_P, 
+                               POW_P(COS_P(CL_P), 
+                                     NUM_P(2.0))))
+                    ret_ptr = DIV_(DL_, POW_(COS_(CL_), NUM_(2.0))); break;
                 case Arcsin:
-                    return DIV_(DL_, POW_(SUB_(NUM_(1), POW_(CL_, NUM_(2))), NUM_(0.5)));    
+                    IF_F(DIV_P(DL_P, 
+                               POW_P(SUB_P(NUM_P(1.0), 
+                                           POW_P(CL_P, 
+                                                 NUM_P(2.0)), 0), 
+                                     NUM_P(0.5))))
+                    ret_ptr = DIV_(DL_, POW_(SUB_(NUM_(1.0), POW_(CL_, NUM_(2.0))), NUM_(0.5))); break;
                 case Arccos:
-                    return SUB_(NUM_(0), DIV_(DL_, POW_(SUB_(NUM_(1), POW_(CL_, NUM_(2))), NUM_(0.5))));    
+                    IF_F(SUB_P(NUM_P(0.0), 
+                               DIV_P(DL_P, 
+                                     POW_P(SUB_P(NUM_P(1.0), 
+                                                 POW_P(CL_P, 
+                                                       NUM_P(2.0)), 0), 
+                                           NUM_P(0.5))), 0);)
+                    ret_ptr = SUB_(NUM_(0.0), DIV_(DL_, POW_(SUB_(NUM_(1.0), POW_(CL_, NUM_(2.0))), NUM_(0.5)))); break;
                 case Arctg:
-                    return DIV_(DL_, ADD_(NUM_(1), POW_(CL_, NUM_(2))));
+                    IF_F(DIV_P(DL_P, 
+                               ADD_P(NUM_P(1.0), 
+                                     POW_P(CL_P, 
+                                           NUM_P(2.0)), 0)))
+                    ret_ptr = DIV_(DL_, ADD_(NUM_(1.0), POW_(CL_, NUM_(2.0)))); break;
                 case Sh:
-                    return MUL_(DL_, CH_(CL_));
+                    IF_F(MUL_P(DL_P, 
+                               CH_P(CL_P), 0))
+                    ret_ptr = MUL_(DL_, CH_(CL_)); break;
                 case Ch:
-                    return MUL_(DL_, SH_(CL_));;
+                    ret_ptr = MUL_(DL_, SH_(CL_)); break;
                 case Th:
-                    return DIV_(DL_, POW_(CH_(CL_), NUM_(2)));
+                    IF_F(DIV_P(DL_P, 
+                               POW_P(CH_P(CL_P),
+                                     NUM_P(2.0))))
+                    ret_ptr = DIV_(DL_, POW_(CH_(CL_), NUM_(2.0))); break;
                 case NoOp:
-                    return nullptr;
                 default:
-                    return nullptr;
+                    break;
             }
+            break;
         case Var:
-            if (node->data.var_ind == var_ind) return NUM_(1);
-            else                               return NUM_(0);
+            if (node->data.var_ind == var_ind) {
+                IF_F(NUM_P(1.0))
+                ret_ptr = NUM_(1.0);
+            } else {
+                IF_F(NUM_P(0.0))
+                ret_ptr = NUM_(0.0);
+            }
+            break;
         case Num:
-            return NUM_(0);
+            IF_F(NUM_P(0.0))
+            ret_ptr = NUM_(0.0); break;
         case NoType:
-            return nullptr;
         default:
-            return nullptr;
+            break;
     }
-    return nullptr;
+    if (file) AddPhraseAndDirevativeToTexFile(tree, node, ret_ptr, var_ind, file);
+    return ret_ptr;
 }
 
-#undef CL_
-#undef CR_
+#include "dsl_off.h"
 
-#undef DL_
-#undef DR_
-
-#undef ADD_
-#undef SUB_
-#undef MUL_
-#undef DIV_
-#undef POW_
-#undef NUM_
 
 static bool AreThereVariable(TreeNode* node) {
     switch (node->value_type) {
@@ -358,14 +409,26 @@ static TreeNode* MakeItEasy(Tree* tree, TreeNode* node) {
     return node;
 }
 
-void MakeTreeEasy(Tree* tree) {
+void MakeTreeEasy(Tree* tree, FILE* file) {
+
+    if (file) {
+        fprintf(file, "\\subsection{Let's simplify this equation:}\n");
+        AddTreeToTexFile(tree, file);
+    }
+
     size_t old_num_of_elems = tree->number_of_elements;
     tree->root_node_ptr = MakeItEasy(tree, tree->root_node_ptr);
     while (old_num_of_elems != tree->number_of_elements) {
         old_num_of_elems = tree->number_of_elements;
         tree->root_node_ptr = MakeItEasy(tree, tree->root_node_ptr);
     }
-    TreeDump(tree, HTMLFileMode, "Func: %s\nEasier tree\n", __func__);
+
+    if (file) {
+        fprintf(file, "Now it looks nice!\n");
+        AddTreeToTexFile(tree, file);
+    }
+
+    //TreeDump(tree, HTMLFileMode, "Func: %s\nEasier tree\n", __func__);
 }
 
 static void CopyTreeVars(Tree* tree_to, Tree* tree_from) {
@@ -381,18 +444,23 @@ static void CopyTree(Tree* tree_to, Tree* tree_from) {
 }
 
 
-void FillTreeWithDiff(Tree* diff_tree, Tree* tree) {
+void FillTreeWithDiff(Tree* diff_tree, Tree* tree, FILE* file) {
     CopyTreeVars(diff_tree, tree);
     
-    diff_tree->root_node_ptr = Differenciate(diff_tree, tree->root_node_ptr, 0);
+    diff_tree->root_node_ptr = Differenciate(diff_tree, tree->root_node_ptr, 0, file);
     diff_tree->root_node_ptr->parent = nullptr;
 
-    TreeDump(diff_tree, HTMLFileMode, "Func: %s\nDifferenciated tree\n", __func__);
+    //TreeDump(diff_tree, HTMLFileMode, "Func: %s\nDifferenciated tree\n", __func__);
 }
 
 
 
-void FillTreeWithOrederedDiff(Tree* ordered_diff_tree, Tree* tree, size_t diff_number) {
+void FillTreeWithOrederedDiff(Tree* ordered_diff_tree, Tree* tree, size_t diff_number, FILE* file) {
+
+    if (file) {
+        fprintf(file, "\\section{Let's find the beautiful %lu direvative of this equation:}\n", diff_number);
+        AddTreeToTexFile(tree, file);
+    }
 
     CopyTree(ordered_diff_tree, tree);
 
@@ -401,36 +469,204 @@ void FillTreeWithOrederedDiff(Tree* ordered_diff_tree, Tree* tree, size_t diff_n
         INIT_TREE(temp_tree);
 
         for (size_t cur_diff_num = 0; cur_diff_num < diff_number; cur_diff_num++) {
+
+            if (file) {
+                fprintf(file, "\\subsection{Let's find  %lu direvative of the equation}\n", cur_diff_num + 1);
+            }
+
             CopyTree(&temp_tree, ordered_diff_tree);
             KillSubTree(ordered_diff_tree, ordered_diff_tree->root_node_ptr);
-            FillTreeWithDiff(ordered_diff_tree, &temp_tree);
-            MakeTreeEasy(ordered_diff_tree);
+            FillTreeWithDiff(ordered_diff_tree, &temp_tree, file);
+            MakeTreeEasy(ordered_diff_tree, file);
             KillSubTree(&temp_tree, temp_tree.root_node_ptr);
         }
         KillTree(&temp_tree);
     }
 
-    TreeDump(ordered_diff_tree, HTMLFileMode, "Func: %s\nDifferenciated %lu times tree\n", __func__, diff_number);
+    //TreeDump(ordered_diff_tree, HTMLFileMode, "Func: %s\nDifferenciated %lu times tree\n", __func__, diff_number);
 }
 
-
-static TreeNode* MakeZeroTailorNode(Tree* tailor_tree, TreeNode* node) {
-    ADD(num(0), mul(div(copy(node), num(1)), pow(sub(x0, x), num(0))));
+static void ChangeVarsToAnother(TreeNode* node, size_t var_to_change_ind, size_t new_var_ind) {
+    if (node->value_type == Var && node->data.var_ind == var_to_change_ind) node->data.var_ind = new_var_ind;
+    if (node->son1) ChangeVarsToAnother(node->son1, var_to_change_ind, new_var_ind);
+    if (node->son2) ChangeVarsToAnother(node->son2, var_to_change_ind, new_var_ind);
 }
 
-static void AddNextTailorPart(Tree* tailor_tree, size_t tailor_number) {
-    new_root = add(tailor_tree->root, mul(div(diff(tailor_tree->root), num(prev_num*tailor_number)), 
-            pow(sub(x0, x), num(prev_num*tailor_number))));
-    KillSubTree(tailor_tree->root);
-    tailor_tree->root = new_root; nodes?
+#include "dsl_on.h"
+
+static TreeNode* MakeZeroTailorNode(Tree* tree, size_t var_x_ind, size_t var_x_0_ind) {
+
+    TreeNode* node = nullptr;
+    
+    return ADD_(NUM_(0),
+                MUL_(DIV_(tree->root_node_ptr, 
+                          NUM_(1)), 
+                     POW_(SUB_(VAR_(var_x_ind), 
+                               VAR_(var_x_0_ind)), 
+                          NUM_(0))));
 }
 
-void MakeTailor(Tree* tailor_tree, Tree* tree, size_t tailor_number) {
-    KillSubTree(tailor_tree, tailor_tree->root_node_ptr);
-    tailor_tree->root_node_ptr = MakeZeroTailorNode(tailor_tree, tree->root_node_ptr);
+static void AddNextTailorPart(Tree* tree, size_t tailor_number, size_t var_x_ind, size_t var_x_0_ind, FILE* file = nullptr);
 
-    for (size_t counter = 0; counter < tailor_number; counter++) {
-        AddNextTailorPart(tailor_tree);
+static void AddNextTailorPart(Tree* tree, size_t tailor_number, size_t var_x_ind, size_t var_x_0_ind, FILE* file) {
+    TreeNode* node = nullptr;
+    TreeNode* diff_part = tree->root_node_ptr->son2->son1->son1;
+    double    divisor   = tree->root_node_ptr->son2->son1->son2->data.num;
+    double    power     = tree->root_node_ptr->son2->son2->son2->data.num;
+    MakeItEasy(tree, diff_part);
+    TreeNode* new_root = ADD_(tree->root_node_ptr, 
+                              MUL_(DIV_(Differenciate(tree, diff_part, var_x_0_ind, file), 
+                                        NUM_(divisor * (double)tailor_number)), 
+                                   POW_(SUB_(VAR_(var_x_ind), 
+                                             VAR_(var_x_0_ind)), 
+                                        NUM_(power + 1))));
+    tree->root_node_ptr = new_root;
+}
+
+#include "dsl_off.h"
+
+void MakeTaylor(Tree* taylor_tree, Tree* tree, size_t tailor_number, size_t var_x_ind, FILE* file) {
+
+    if (file) {
+        fprintf(file, "\\section{Let's calculate first %lu parts of taylor's form of this equation:}\n", tailor_number);
+        AddTreeToTexFile(tree, file);
     }
+
+    CopyTree(taylor_tree, tree);
+
+    size_t var_x_0_ind = taylor_tree->number_of_variables;
+    taylor_tree->number_of_variables++;
+    taylor_tree->vars[var_x_0_ind] = {(char*) "x_0", 3, 0};
+
+    ChangeVarsToAnother(taylor_tree->root_node_ptr, var_x_ind, var_x_0_ind);
+
+    taylor_tree->root_node_ptr = MakeZeroTailorNode(taylor_tree, var_x_ind, var_x_0_ind);
+
+    for (size_t counter = 1; counter <= tailor_number; counter++) {
+        AddNextTailorPart(taylor_tree, counter, var_x_ind, var_x_0_ind);
+    }
+
+    MakeTreeEasy(taylor_tree);
+
+    if (file) {
+        fprintf(file, "\\Here it is:\n");
+        AddTreeToTexFile(taylor_tree, file);
+    }
+
+    //TreeDump(taylor_tree, HTMLFileMode, "Tailor done. To %lu summant", tailor_number);
+
+}
+
+static void SubstituteParamNode(Tree* tree, TreeNode* node, size_t subst_param_ind) {
+    if (node->value_type == Var && node->data.var_ind == subst_param_ind) {
+        node->value_type = Num;
+        node->data = {.num = tree->vars[subst_param_ind].value};
+    }
+
+    if (node->son1) SubstituteParamNode(tree, node->son1, subst_param_ind);
+    if (node->son2) SubstituteParamNode(tree, node->son2, subst_param_ind);
+}
+
+static void SubstituteParamTree(Tree* tree, size_t subst_param_ind) {
+    SubstituteParamNode(tree, tree->root_node_ptr, subst_param_ind);
+    tree->vars[subst_param_ind] = {nullptr, 0, 0};
+    tree->number_of_variables--;
+    //TreeDump(tree, HTMLFileMode, "Func: %s\nParam substituted\n", __func__);
+}
+
+void TaylorResearch(Tree* tailor_tree, Tree* tree, size_t var_x_ind, 
+                    FILE* file, const char* taylor_graph_params) {
+
+    fprintf(file, "\\section{Let's research taylor's form of this equation:}\n");
+    AddTreeToTexFile(tree, file);                    
+
+    FILE* params_file = fopen(taylor_graph_params, "r");
+    FILE* for_data    = fopen("temp_gnuplot_data.dat" ,"w");
+    FILE* for_point   = fopen("temp_gnuplot_point.dat", "w");
+    FILE* for_gnuplot = fopen("temp_gnuplot_code.gnuplot" ,"w");
+    size_t tailor_number = 0;
+    double x_0_val = 0;
+    double xmin    = 0;
+    double xmax    = 0;
+    double step    = 1;
+
+    fscanf(params_file, "Taylor last summant's power: %lu\n", &tailor_number);
+    fscanf(params_file, "Taylor starting point: %lf\n", &x_0_val);
+    fscanf(params_file, "xmin: %lf\n", &xmin);
+    fscanf(params_file, "xmax: %lf\n", &xmax);
+    fscanf(params_file, "step: %lf\n", &step);
+    fclose(params_file);
+
+    MakeTaylor(tailor_tree, tree, tailor_number, var_x_ind);
+
+    Tree temp_coefficient_taylor = {};
+    INIT_TREE(temp_coefficient_taylor);
+
+    CopyTree(&temp_coefficient_taylor, tailor_tree);
+    temp_coefficient_taylor.vars[temp_coefficient_taylor.number_of_variables - 1].value = x_0_val;
+
+    SubstituteParamTree(&temp_coefficient_taylor, temp_coefficient_taylor.number_of_variables - 1);
+    
+    MakeTreeEasy(&temp_coefficient_taylor);
+
+    fprintf(file, "\\subsection{This is taylor's form with first %lu summants around point %.3g}\n", tailor_number, x_0_val);
+    AddTreeToTexFile(&temp_coefficient_taylor, file); 
+
+
+    Tree temp_first_derivative = {};
+    INIT_TREE(temp_first_derivative);
+
+    FillTreeWithDiff(&temp_first_derivative, tree);
+    MakeTreeEasy(&temp_first_derivative);
+
+    tree->vars[tree->number_of_variables - 1].value = x_0_val;
+    temp_first_derivative.vars[temp_first_derivative.number_of_variables - 1].value = x_0_val;
+    double y_0_tangent = CalculateNode(tree, tree->root_node_ptr);
+    double   k_tangent = CalculateNode(&temp_first_derivative, temp_first_derivative.root_node_ptr);
+    fprintf(for_point, "%lf %lf\n", x_0_val, y_0_tangent);
+    fclose(for_point);
+
+    for (double x = xmin; x <= xmax; x += step) {
+        temp_coefficient_taylor.vars[temp_coefficient_taylor.number_of_variables - 1].value = x;
+        tree->vars[tree->number_of_variables - 1].value = x;
+        double y_taylor = CalculateNode(&temp_coefficient_taylor, temp_coefficient_taylor.root_node_ptr);
+        double y_function = CalculateNode(tree, tree->root_node_ptr);
+        double y_tangent = k_tangent * (x - x_0_val) + y_0_tangent;
+        fprintf(for_data, "%lf %lf %lf %lf\n", x, y_taylor, y_function, y_tangent);
+    }
+    fclose(for_data);
+
+
+    fprintf(for_gnuplot,
+        "set terminal pngcairo size 600,400 enhanced font 'Verdana,10'\n"
+        "set output 'tex_graph.png'\n"
+        "set grid\n"
+        "set xlabel 'x'\n"
+        "set ylabel 'f(x)'\n"
+        "plot 'temp_gnuplot_data.dat'  using 1:2 with lines lc rgb '#ff0000' title 'Taylor', \\\n"
+        "     'temp_gnuplot_data.dat'  using 1:3 with lines lc rgb '#001aff' title 'Function', \\\n"
+        "     'temp_gnuplot_data.dat'  using 1:4 with lines lc rgb '#000000' title 'Tangent', \\\n"
+        "     'temp_gnuplot_point.dat' using 1:2 with points pt 7 ps 1.5 lc rgb '#eeff00' title 'Touch point',\n"
+        "unset output\n");
+
+
+
+
+    fclose(for_gnuplot);
+
+    system("gnuplot temp_gnuplot_code.gnuplot");
+
+    fprintf(file, "\\subsection{And this is a graph to compare func, it's tangent and taylor's form}\n");
+    fprintf(file, "\\includegraphics[width=0.9\\textwidth,height=0.9\\textheight, keepaspectratio]{tex_graph.png}\n");
+ 
+
+    fprintf(file, "\\section{Let's refresh our knoewledge about the function}\n");
+    fprintf(file, "\\subsection{Function:}\n");
+    AddTreeToTexFile(tree, file);
+    fprintf(file, "\\subsection{It's first derivative:}\n");
+    AddTreeToTexFile(&temp_first_derivative, file);
+
+    KillTree(&temp_first_derivative);
+    KillTree(&temp_coefficient_taylor);
 
 }

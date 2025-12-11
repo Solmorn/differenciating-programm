@@ -56,15 +56,19 @@ void PrintNodeInfix(Tree* tree, TreeNode* node) {
     //printf(")");
 }
 
-void KillSubtree(Tree* tree, TreeNode* node) {
+void KillSubTree(Tree* tree, TreeNode* node) {
 
     assert(node);
     assert(tree);
 
-    if (node->son1) KillSubtree(tree, node->son1);
-    if (node->son2) KillSubtree(tree, node->son2);
+    if (node->son1) KillSubTree(tree, node->son1);
+    if (node->son2) KillSubTree(tree, node->son2);
+    
+    if (node->parent && node->parent->son1 == node) node->parent->son1 = nullptr;
+    if (node->parent && node->parent->son2 == node) node->parent->son2 = nullptr;
 
     if (node) {
+        if (tree->root_node_ptr == node) tree->root_node_ptr = nullptr;
         free(node);
         tree->number_of_elements--;
     }
@@ -74,21 +78,30 @@ void KillTree(Tree* tree) {
 
     assert(tree);
 
-    if (tree->root_node_ptr != nullptr) KillSubtree(tree, tree->root_node_ptr);
-    tree->root_node_ptr = nullptr;
+    if (tree->root_node_ptr != nullptr) KillSubTree(tree, tree->root_node_ptr);
 
     if (tree->buffer != nullptr) free(tree->buffer);
 
     fclose(tree->dump_file);
 }
-TreeNode* AlocateTreeNode(TreeNode* parent, tree_type value, ValueType val_t) {
+
+TreeNode* AlocateTreeNode(Tree* tree, TreeNode* parent, tree_type value, ValueType val_t, TreeNode* son1, TreeNode* son2) {
 
     TreeNode* new_node_ptr = (TreeNode*)calloc(1, sizeof(TreeNode));
+
+    if (tree) {
+        if (!tree->number_of_elements) tree->root_node_ptr = new_node_ptr;
+        tree->number_of_elements++;
+    }
 
     new_node_ptr->data       = value;
     new_node_ptr->value_type = val_t;
 
     new_node_ptr->parent = parent;
+    new_node_ptr->son1 = son1;
+    new_node_ptr->son2 = son2;
+    if (son1) son1->parent = new_node_ptr;
+    if (son2) son2->parent = new_node_ptr;
 
     return new_node_ptr;
 }
@@ -243,7 +256,7 @@ static void AddDotNodeRanks(Tree* tree, TreeNode* cur_node, FILE* out, size_t ra
     } else if   (cur_node->value_type == Num) {
         fprintf(out,    "    <tr><td BGCOLOR=\"lightgreen\">data: \"%lf\"</td></tr>\n", (cur_node->data).num);
     } else {
-        fprintf(out,    "    <tr><td BGCOLOR=\"lightgreen\">data: \"%s\"</td></tr>\n", tree->vars[(cur_node->data).var_ind].name);
+        fprintf(out,    "    <tr><td BGCOLOR=\"lightgreen\">data: \"%.*s\"</td></tr>\n", tree->vars[(cur_node->data).var_ind].name_length, tree->vars[(cur_node->data).var_ind].name);
     }
 
     fprintf(out,        "    <tr>\n"

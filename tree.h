@@ -27,10 +27,6 @@ enum TreeErr {
 
 };
 
-enum TreeDataMemoryType {
-    NoNewMemory,
-    NewMemory
-};
 
 
 enum DumpingMode {
@@ -44,19 +40,40 @@ enum Operations {
     Mul,
     Div,
     Pow,
+    Ln,
+    Sin,
+    Cos,
+    Tg,
+    Arcsin,
+    Arccos,
+    Arctg,
+    Sh,
+    Ch,
+    Th,
     NoOp
 };
 
 struct Operation {
     Operations op;
     const char* name;
+    const char* tex_name;
 };
 
-static const Operation ops[] = {{Add, "+"},
-                                {Sub, "-"},
-                                {Mul, "*"},
-                                {Div, "/"},
-                                {Pow, "^"}};
+static const Operation ops[] =         {{Add,    "+", "+"},
+                                        {Sub,    "-", "-"},
+                                        {Mul,    "*", "\\cdot "},
+                                        {Div,    "/", "/"},
+                                        {Pow,    "^", "^"},
+                                        {Ln,     "ln", "\\ln"},
+                                        {Sin,    "sin", "\\sin"},
+                                        {Cos,    "cos", "\\cos"},
+                                        {Tg,     "tg", "\\tan"},
+                                        {Arcsin, "arcsin", "\\arcsin"},
+                                        {Arccos, "arccos", "\\arccos"},
+                                        {Arctg,  "arctg", "\\arctan"},
+                                        {Sh,     "sh", "\\sinh"},
+                                        {Ch,     "ch", "\\cosh"},
+                                        {Th,     "th", "\\tanh"}};
 
 enum ValueType {
     Op,
@@ -87,8 +104,6 @@ struct TreeNode {
 
     ValueType value_type = NoType;
 
-    TreeDataMemoryType data_memory_type = NoNewMemory;
-
     TreeNode* parent = nullptr;
 
     TreeNode* son1 = nullptr;
@@ -99,6 +114,7 @@ struct TreeNode {
 
 struct Variable {
     char* name = nullptr;
+    int name_length = 0;
     double value = 0;
 };
 
@@ -145,9 +161,9 @@ struct Tree {
 TreeErr TreeVerify(Tree* tree);
 void TreeCtor(Tree* tree, BirthInfo info_got);
 void PrintNodeInfix(Tree* tree, TreeNode* node);
-void KillSubtree(Tree* tree, TreeNode* node);
+void KillSubTree(Tree* tree, TreeNode* node);
 void KillTree(Tree* tree);
-TreeNode* AlocateTreeNode(TreeNode* parent, tree_type value, ValueType val_t);
+TreeNode* AlocateTreeNode(Tree* tree, TreeNode* parent, tree_type value, ValueType val_t, TreeNode* son1 = nullptr, TreeNode* son2 = nullptr);
 void TreeDump(Tree* tree, DumpingMode mode, const char* why_dump, ...);
 
 

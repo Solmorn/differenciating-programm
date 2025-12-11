@@ -15,6 +15,13 @@
 
 
 
+
+bool AreEqualDoubles(double a, double b);
 TreeErr CalculateTree(Tree* tree);
-void FillTreeWithDiff(Tree* diff_tree, Tree* tree);
+void MakeTreeEasy(Tree* tree, FILE* file = nullptr);
+void FillTreeWithDiff(Tree* diff_tree, Tree* tree, FILE* file = nullptr);
+void FillTreeWithOrederedDiff(Tree* ordered_diff_tree, Tree* tree, size_t diff_number, FILE* file = nullptr);
+void MakeTaylor(Tree* tailor_tree, Tree* tree, size_t tailor_number, size_t var_x_ind, FILE* file = nullptr);
+void TaylorResearch(Tree* tailor_tree, Tree* tree, size_t var_x_ind, FILE* file, const char* taylor_graph_params);
+
 #endif
