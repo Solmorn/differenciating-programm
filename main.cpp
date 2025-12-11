@@ -16,11 +16,13 @@
 
 
 int main() {
+
     const char* tex_filename        = "main.tex";
     const char* tree_infix          = "tree_infix.txt";
     const char* taylor_graph_params = "taylor_graph_params.txt";
 
     FILE* tex_file = OpenTex(tex_filename);
+
 
     Tree infix_tree = {};
     INIT_TREE(infix_tree);

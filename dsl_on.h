@@ -31,7 +31,7 @@
 #define DR_P fprintf(file, "\\frac{d}{dx}\\left("); MakeTexFromSubtree(tree, node->son2, file); fprintf(file, "\\right)");
 
 
-#define NUM_P(number)     fprintf(file, " %.3g ", number);
+#define NUM_P(number)     fprintf(file, " %.15lg ", number);
 #define VAR_P(index)      fprintf(file, " %.*s ", tree->vars[index].name);
 
 #define    ADD_P(son1, son2, brack_need) if(brack_need) fprintf(file, "\\left("); son1 fprintf(file, " + "); son2 if(brack_need) fprintf(file, "\\right)");

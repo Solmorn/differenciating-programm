@@ -95,7 +95,7 @@ static TreeNode* ParseTreeFromBuffer(Tree* tree, TreeNode* parent, char** pos) {
         node->son1 = ParseTreeFromBuffer(tree, node, pos);
         node->son2 = ParseTreeFromBuffer(tree, node, pos);
 
-    
+
 
         SKIP_SPACES(*pos);
         (*pos)++;
@@ -109,7 +109,7 @@ static TreeNode* ParseTreeFromBuffer(Tree* tree, TreeNode* parent, char** pos) {
 
 
     return nullptr;
-    
+
 
 }
 
@@ -136,7 +136,7 @@ TreeErr ParseTreeFromFile(Tree* tree, const char* filename) {
     fprintf(test, "\n\n%s", pos);
     fclose(test);
 
-    
+
 
     return Ok;
 
@@ -153,7 +153,7 @@ void PrintFileNodePrefix(Tree* tree, TreeNode* node, FILE* file) {
     if          (node->value_type == Op) {
         fprintf(file,    " \"%s\" ", ops[(node->data).op].name);
     } else if   (node->value_type == Num) {
-        fprintf(file,    " \"%.3g\" ", (node->data).num);
+        fprintf(file,    " \"%.5lg\" ", (node->data).num);
     } else {
         fprintf(file,    " \"%.*s\" ", tree->vars[(node->data).var_ind].name_length, tree->vars[(node->data).var_ind].name);
     }
@@ -175,7 +175,9 @@ FILE* OpenTex(const char* filename) {
                     "\\usepackage{graphicx}\n"
                     "\\usepackage{breqn}\n"
                     "\\breqnsetup{breakdepth={1}}\n\n"
-                    "\\begin{document}\n\n");
+                    "\\begin{document}\n"
+                    "\\tableofcontents\n"
+                    "\\newpage\n\n");
 
     return file;
 }
@@ -233,11 +235,11 @@ void MakeTexFromSubtree(Tree* tree, TreeNode* node, FILE* file) {
                     fprintf(file, "}");
                     break;
                 case Ln:
-                case Sin:  
-                case Cos:       
+                case Sin:
+                case Cos:
                 case Tg:
-                case Arcsin:  
-                case Arccos:  
+                case Arcsin:
+                case Arccos:
                 case Arctg:
                 case Sh:
                 case Ch:
@@ -319,7 +321,7 @@ TreeErr InfixParseTreeFromFile(Tree* tree, const char* filename) {
     fprintf(test, "\n\n%s", pos);
     fclose(test);
 
-    
+
 
     return Ok;
 
@@ -418,7 +420,7 @@ static TreeNode* GetFuncOp(Tree* tree, char** s) {
             TreeNode* node = GetP(tree, s);
             if (node == nullptr) return nullptr;
             return AlocateTreeNode(tree, nullptr, {.op = ops[index].op}, Op, node, AlocateTreeNode(tree, nullptr, {.num = 0}, Num));
-        } 
+        }
     }
     return nullptr;
 }

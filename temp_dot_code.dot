@@ -1,113 +1,113 @@
 digraph G {
     orientation=portrait;
     rankdir=TB;
-node7 [rank=1,
+node0 [rank=1,
 shape=plaintext,
 label=<  <table BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightgray">
     <tr><td>parent: (nil)</td></tr>
-    <tr><td BGCOLOR="lightblue">ptr: 0x5af3183d6ad0</td></tr>
+    <tr><td BGCOLOR="lightblue">ptr: 0x504000000490</td></tr>
     <tr><td BGCOLOR="lightyellow">type: "OP"</td></tr>
     <tr><td BGCOLOR="lightgreen">data: "+"</td></tr>
     <tr>
       <td>
         <table BORDER="0" CELLBORDER="1" CELLSPACING="0">
-          <tr><td>left: 0x5af3183d6b10</td><td>right: 0x5af3183d6b50</td></tr>
+          <tr><td>left: 0x504000000210</td><td>right: 0x504000000450</td></tr>
         </table>
       </td>
     </tr>
   </table>
 >
 penwidth=3, color=black];
-node8 [rank=2,
+node1 [rank=2,
 shape=plaintext,
 label=<  <table BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightgray">
-    <tr><td>parent: 0x5af3183d6ad0</td></tr>
-    <tr><td BGCOLOR="lightblue">ptr: 0x5af3183d6b10</td></tr>
+    <tr><td>parent: 0x504000000490</td></tr>
+    <tr><td BGCOLOR="lightblue">ptr: 0x504000000210</td></tr>
     <tr><td BGCOLOR="lightyellow">type: "OP"</td></tr>
-    <tr><td BGCOLOR="lightgreen">data: "*"</td></tr>
+    <tr><td BGCOLOR="lightgreen">data: "sin"</td></tr>
     <tr>
       <td>
         <table BORDER="0" CELLBORDER="1" CELLSPACING="0">
-          <tr><td>left: 0x5af3183d6b90</td><td>right: 0x5af3183d6c50</td></tr>
+          <tr><td>left: 0x504000000190</td><td>right: 0x5040000001d0</td></tr>
         </table>
       </td>
     </tr>
   </table>
 >
 penwidth=3, color=gray];
-node9 [rank=3,
+node2 [rank=3,
 shape=plaintext,
 label=<  <table BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightgray">
-    <tr><td>parent: 0x5af3183d6b10</td></tr>
-    <tr><td BGCOLOR="lightblue">ptr: 0x5af3183d6b90</td></tr>
+    <tr><td>parent: 0x504000000210</td></tr>
+    <tr><td BGCOLOR="lightblue">ptr: 0x504000000190</td></tr>
     <tr><td BGCOLOR="lightyellow">type: "OP"</td></tr>
     <tr><td BGCOLOR="lightgreen">data: "+"</td></tr>
     <tr>
       <td>
         <table BORDER="0" CELLBORDER="1" CELLSPACING="0">
-          <tr><td>left: 0x5af3183d6bd0</td><td>right: 0x5af3183d6c10</td></tr>
+          <tr><td>left: 0x504000000110</td><td>right: 0x504000000150</td></tr>
         </table>
       </td>
     </tr>
   </table>
 >
 penwidth=3, color=gray];
-node10 [rank=4,
+node3 [rank=4,
 shape=plaintext,
 label=<  <table BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightgray">
-    <tr><td>parent: 0x5af3183d6b90</td></tr>
-    <tr><td BGCOLOR="lightblue">ptr: 0x5af3183d6bd0</td></tr>
-    <tr><td BGCOLOR="lightyellow">type: "NUM"</td></tr>
-    <tr><td BGCOLOR="lightgreen">data: "0.000000"</td></tr>
-    <tr>
-      <td>
-        <table BORDER="0" CELLBORDER="1" CELLSPACING="0">
-          <tr><td>left: (nil)</td><td>right: (nil)</td></tr>
-        </table>
-      </td>
-    </tr>
-  </table>
->
-penwidth=3, color=yellow];
-node11 [rank=4,
-shape=plaintext,
-label=<  <table BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightgray">
-    <tr><td>parent: 0x5af3183d6b90</td></tr>
-    <tr><td BGCOLOR="lightblue">ptr: 0x5af3183d6c10</td></tr>
-    <tr><td BGCOLOR="lightyellow">type: "NUM"</td></tr>
-    <tr><td BGCOLOR="lightgreen">data: "1.000000"</td></tr>
-    <tr>
-      <td>
-        <table BORDER="0" CELLBORDER="1" CELLSPACING="0">
-          <tr><td>left: (nil)</td><td>right: (nil)</td></tr>
-        </table>
-      </td>
-    </tr>
-  </table>
->
-penwidth=3, color=yellow];
-node12 [rank=3,
-shape=plaintext,
-label=<  <table BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightgray">
-    <tr><td>parent: 0x5af3183d6b10</td></tr>
-    <tr><td BGCOLOR="lightblue">ptr: 0x5af3183d6c50</td></tr>
+    <tr><td>parent: 0x504000000190</td></tr>
+    <tr><td BGCOLOR="lightblue">ptr: 0x504000000110</td></tr>
     <tr><td BGCOLOR="lightyellow">type: "OP"</td></tr>
-    <tr><td BGCOLOR="lightgreen">data: "-"</td></tr>
+    <tr><td BGCOLOR="lightgreen">data: "*"</td></tr>
     <tr>
       <td>
         <table BORDER="0" CELLBORDER="1" CELLSPACING="0">
-          <tr><td>left: 0x5af3183d6c90</td><td>right: 0x5af3183d6cd0</td></tr>
+          <tr><td>left: 0x504000000010</td><td>right: 0x5040000000d0</td></tr>
         </table>
       </td>
     </tr>
   </table>
 >
 penwidth=3, color=gray];
-node13 [rank=4,
+node4 [rank=5,
 shape=plaintext,
 label=<  <table BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightgray">
-    <tr><td>parent: 0x5af3183d6c50</td></tr>
-    <tr><td BGCOLOR="lightblue">ptr: 0x5af3183d6c90</td></tr>
+    <tr><td>parent: 0x504000000110</td></tr>
+    <tr><td BGCOLOR="lightblue">ptr: 0x504000000010</td></tr>
+    <tr><td BGCOLOR="lightyellow">type: "NUM"</td></tr>
+    <tr><td BGCOLOR="lightgreen">data: "15.000000"</td></tr>
+    <tr>
+      <td>
+        <table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+          <tr><td>left: (nil)</td><td>right: (nil)</td></tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+>
+penwidth=3, color=yellow];
+node5 [rank=5,
+shape=plaintext,
+label=<  <table BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightgray">
+    <tr><td>parent: 0x504000000110</td></tr>
+    <tr><td BGCOLOR="lightblue">ptr: 0x5040000000d0</td></tr>
+    <tr><td BGCOLOR="lightyellow">type: "OP"</td></tr>
+    <tr><td BGCOLOR="lightgreen">data: "^"</td></tr>
+    <tr>
+      <td>
+        <table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+          <tr><td>left: 0x504000000050</td><td>right: 0x504000000090</td></tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+>
+penwidth=3, color=gray];
+node6 [rank=6,
+shape=plaintext,
+label=<  <table BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightgray">
+    <tr><td>parent: 0x5040000000d0</td></tr>
+    <tr><td BGCOLOR="lightblue">ptr: 0x504000000050</td></tr>
     <tr><td BGCOLOR="lightyellow">type: "VAR"</td></tr>
     <tr><td BGCOLOR="lightgreen">data: "x"</td></tr>
     <tr>
@@ -120,62 +120,11 @@ label=<  <table BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightgray">
   </table>
 >
 penwidth=3, color=yellow];
-node14 [rank=4,
+node7 [rank=6,
 shape=plaintext,
 label=<  <table BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightgray">
-    <tr><td>parent: 0x5af3183d6c50</td></tr>
-    <tr><td BGCOLOR="lightblue">ptr: 0x5af3183d6cd0</td></tr>
-    <tr><td BGCOLOR="lightyellow">type: "NUM"</td></tr>
-    <tr><td BGCOLOR="lightgreen">data: "10.000000"</td></tr>
-    <tr>
-      <td>
-        <table BORDER="0" CELLBORDER="1" CELLSPACING="0">
-          <tr><td>left: (nil)</td><td>right: (nil)</td></tr>
-        </table>
-      </td>
-    </tr>
-  </table>
->
-penwidth=3, color=yellow];
-node15 [rank=2,
-shape=plaintext,
-label=<  <table BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightgray">
-    <tr><td>parent: 0x5af3183d6ad0</td></tr>
-    <tr><td BGCOLOR="lightblue">ptr: 0x5af3183d6b50</td></tr>
-    <tr><td BGCOLOR="lightyellow">type: "OP"</td></tr>
-    <tr><td BGCOLOR="lightgreen">data: "*"</td></tr>
-    <tr>
-      <td>
-        <table BORDER="0" CELLBORDER="1" CELLSPACING="0">
-          <tr><td>left: 0x5af3183d6d10</td><td>right: 0x5af3183d6dd0</td></tr>
-        </table>
-      </td>
-    </tr>
-  </table>
->
-penwidth=3, color=gray];
-node16 [rank=3,
-shape=plaintext,
-label=<  <table BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightgray">
-    <tr><td>parent: 0x5af3183d6b50</td></tr>
-    <tr><td BGCOLOR="lightblue">ptr: 0x5af3183d6d10</td></tr>
-    <tr><td BGCOLOR="lightyellow">type: "OP"</td></tr>
-    <tr><td BGCOLOR="lightgreen">data: "+"</td></tr>
-    <tr>
-      <td>
-        <table BORDER="0" CELLBORDER="1" CELLSPACING="0">
-          <tr><td>left: 0x5af3183d6d50</td><td>right: 0x5af3183d6d90</td></tr>
-        </table>
-      </td>
-    </tr>
-  </table>
->
-penwidth=3, color=gray];
-node17 [rank=4,
-shape=plaintext,
-label=<  <table BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightgray">
-    <tr><td>parent: 0x5af3183d6d10</td></tr>
-    <tr><td BGCOLOR="lightblue">ptr: 0x5af3183d6d50</td></tr>
+    <tr><td>parent: 0x5040000000d0</td></tr>
+    <tr><td BGCOLOR="lightblue">ptr: 0x504000000090</td></tr>
     <tr><td BGCOLOR="lightyellow">type: "NUM"</td></tr>
     <tr><td BGCOLOR="lightgreen">data: "3.000000"</td></tr>
     <tr>
@@ -188,47 +137,13 @@ label=<  <table BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightgray">
   </table>
 >
 penwidth=3, color=yellow];
-node18 [rank=4,
+node8 [rank=4,
 shape=plaintext,
 label=<  <table BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightgray">
-    <tr><td>parent: 0x5af3183d6d10</td></tr>
-    <tr><td BGCOLOR="lightblue">ptr: 0x5af3183d6d90</td></tr>
-    <tr><td BGCOLOR="lightyellow">type: "VAR"</td></tr>
-    <tr><td BGCOLOR="lightgreen">data: "x"</td></tr>
-    <tr>
-      <td>
-        <table BORDER="0" CELLBORDER="1" CELLSPACING="0">
-          <tr><td>left: (nil)</td><td>right: (nil)</td></tr>
-        </table>
-      </td>
-    </tr>
-  </table>
->
-penwidth=3, color=yellow];
-node19 [rank=3,
-shape=plaintext,
-label=<  <table BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightgray">
-    <tr><td>parent: 0x5af3183d6b50</td></tr>
-    <tr><td BGCOLOR="lightblue">ptr: 0x5af3183d6dd0</td></tr>
-    <tr><td BGCOLOR="lightyellow">type: "OP"</td></tr>
-    <tr><td BGCOLOR="lightgreen">data: "-"</td></tr>
-    <tr>
-      <td>
-        <table BORDER="0" CELLBORDER="1" CELLSPACING="0">
-          <tr><td>left: 0x5af3183d6e10</td><td>right: 0x5af3183d6e50</td></tr>
-        </table>
-      </td>
-    </tr>
-  </table>
->
-penwidth=3, color=gray];
-node20 [rank=4,
-shape=plaintext,
-label=<  <table BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightgray">
-    <tr><td>parent: 0x5af3183d6dd0</td></tr>
-    <tr><td BGCOLOR="lightblue">ptr: 0x5af3183d6e10</td></tr>
+    <tr><td>parent: 0x504000000190</td></tr>
+    <tr><td BGCOLOR="lightblue">ptr: 0x504000000150</td></tr>
     <tr><td BGCOLOR="lightyellow">type: "NUM"</td></tr>
-    <tr><td BGCOLOR="lightgreen">data: "1.000000"</td></tr>
+    <tr><td BGCOLOR="lightgreen">data: "3.000000"</td></tr>
     <tr>
       <td>
         <table BORDER="0" CELLBORDER="1" CELLSPACING="0">
@@ -239,11 +154,11 @@ label=<  <table BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightgray">
   </table>
 >
 penwidth=3, color=yellow];
-node21 [rank=4,
+node9 [rank=3,
 shape=plaintext,
 label=<  <table BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightgray">
-    <tr><td>parent: 0x5af3183d6dd0</td></tr>
-    <tr><td BGCOLOR="lightblue">ptr: 0x5af3183d6e50</td></tr>
+    <tr><td>parent: 0x504000000210</td></tr>
+    <tr><td BGCOLOR="lightblue">ptr: 0x5040000001d0</td></tr>
     <tr><td BGCOLOR="lightyellow">type: "NUM"</td></tr>
     <tr><td BGCOLOR="lightgreen">data: "0.000000"</td></tr>
     <tr>
@@ -256,18 +171,175 @@ label=<  <table BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightgray">
   </table>
 >
 penwidth=3, color=yellow];
-node7 -> node8 [color=green, weight=2];
-node8 -> node9 [color=green, weight=2];
-node9 -> node10 [color=green, weight=2];
-node9 -> node11 [color=green, weight=2];
-node8 -> node12 [color=green, weight=2];
+node10 [rank=2,
+shape=plaintext,
+label=<  <table BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightgray">
+    <tr><td>parent: 0x504000000490</td></tr>
+    <tr><td BGCOLOR="lightblue">ptr: 0x504000000450</td></tr>
+    <tr><td BGCOLOR="lightyellow">type: "OP"</td></tr>
+    <tr><td BGCOLOR="lightgreen">data: "^"</td></tr>
+    <tr>
+      <td>
+        <table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+          <tr><td>left: 0x5040000003d0</td><td>right: 0x504000000410</td></tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+>
+penwidth=3, color=gray];
+node11 [rank=3,
+shape=plaintext,
+label=<  <table BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightgray">
+    <tr><td>parent: 0x504000000450</td></tr>
+    <tr><td BGCOLOR="lightblue">ptr: 0x5040000003d0</td></tr>
+    <tr><td BGCOLOR="lightyellow">type: "OP"</td></tr>
+    <tr><td BGCOLOR="lightgreen">data: "cos"</td></tr>
+    <tr>
+      <td>
+        <table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+          <tr><td>left: 0x504000000350</td><td>right: 0x504000000390</td></tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+>
+penwidth=3, color=gray];
+node12 [rank=4,
+shape=plaintext,
+label=<  <table BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightgray">
+    <tr><td>parent: 0x5040000003d0</td></tr>
+    <tr><td BGCOLOR="lightblue">ptr: 0x504000000350</td></tr>
+    <tr><td BGCOLOR="lightyellow">type: "OP"</td></tr>
+    <tr><td BGCOLOR="lightgreen">data: "+"</td></tr>
+    <tr>
+      <td>
+        <table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+          <tr><td>left: 0x5040000002d0</td><td>right: 0x504000000310</td></tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+>
+penwidth=3, color=gray];
+node13 [rank=5,
+shape=plaintext,
+label=<  <table BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightgray">
+    <tr><td>parent: 0x504000000350</td></tr>
+    <tr><td BGCOLOR="lightblue">ptr: 0x5040000002d0</td></tr>
+    <tr><td BGCOLOR="lightyellow">type: "OP"</td></tr>
+    <tr><td BGCOLOR="lightgreen">data: "*"</td></tr>
+    <tr>
+      <td>
+        <table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+          <tr><td>left: 0x504000000250</td><td>right: 0x504000000290</td></tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+>
+penwidth=3, color=gray];
+node14 [rank=6,
+shape=plaintext,
+label=<  <table BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightgray">
+    <tr><td>parent: 0x5040000002d0</td></tr>
+    <tr><td BGCOLOR="lightblue">ptr: 0x504000000250</td></tr>
+    <tr><td BGCOLOR="lightyellow">type: "NUM"</td></tr>
+    <tr><td BGCOLOR="lightgreen">data: "5.000000"</td></tr>
+    <tr>
+      <td>
+        <table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+          <tr><td>left: (nil)</td><td>right: (nil)</td></tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+>
+penwidth=3, color=yellow];
+node15 [rank=6,
+shape=plaintext,
+label=<  <table BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightgray">
+    <tr><td>parent: 0x5040000002d0</td></tr>
+    <tr><td BGCOLOR="lightblue">ptr: 0x504000000290</td></tr>
+    <tr><td BGCOLOR="lightyellow">type: "VAR"</td></tr>
+    <tr><td BGCOLOR="lightgreen">data: "x"</td></tr>
+    <tr>
+      <td>
+        <table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+          <tr><td>left: (nil)</td><td>right: (nil)</td></tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+>
+penwidth=3, color=yellow];
+node16 [rank=5,
+shape=plaintext,
+label=<  <table BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightgray">
+    <tr><td>parent: 0x504000000350</td></tr>
+    <tr><td BGCOLOR="lightblue">ptr: 0x504000000310</td></tr>
+    <tr><td BGCOLOR="lightyellow">type: "NUM"</td></tr>
+    <tr><td BGCOLOR="lightgreen">data: "2.000000"</td></tr>
+    <tr>
+      <td>
+        <table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+          <tr><td>left: (nil)</td><td>right: (nil)</td></tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+>
+penwidth=3, color=yellow];
+node17 [rank=4,
+shape=plaintext,
+label=<  <table BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightgray">
+    <tr><td>parent: 0x5040000003d0</td></tr>
+    <tr><td BGCOLOR="lightblue">ptr: 0x504000000390</td></tr>
+    <tr><td BGCOLOR="lightyellow">type: "NUM"</td></tr>
+    <tr><td BGCOLOR="lightgreen">data: "0.000000"</td></tr>
+    <tr>
+      <td>
+        <table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+          <tr><td>left: (nil)</td><td>right: (nil)</td></tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+>
+penwidth=3, color=yellow];
+node18 [rank=3,
+shape=plaintext,
+label=<  <table BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightgray">
+    <tr><td>parent: 0x504000000450</td></tr>
+    <tr><td BGCOLOR="lightblue">ptr: 0x504000000410</td></tr>
+    <tr><td BGCOLOR="lightyellow">type: "NUM"</td></tr>
+    <tr><td BGCOLOR="lightgreen">data: "2.000000"</td></tr>
+    <tr>
+      <td>
+        <table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+          <tr><td>left: (nil)</td><td>right: (nil)</td></tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+>
+penwidth=3, color=yellow];
+node0 -> node1 [color=green, weight=2];
+node1 -> node2 [color=green, weight=2];
+node2 -> node3 [color=green, weight=2];
+node3 -> node4 [color=green, weight=2];
+node3 -> node5 [color=green, weight=2];
+node5 -> node6 [color=green, weight=2];
+node5 -> node7 [color=green, weight=2];
+node2 -> node8 [color=green, weight=2];
+node1 -> node9 [color=green, weight=2];
+node0 -> node10 [color=green, weight=2];
+node10 -> node11 [color=green, weight=2];
+node11 -> node12 [color=green, weight=2];
 node12 -> node13 [color=green, weight=2];
-node12 -> node14 [color=green, weight=2];
-node7 -> node15 [color=green, weight=2];
-node15 -> node16 [color=green, weight=2];
-node16 -> node17 [color=green, weight=2];
-node16 -> node18 [color=green, weight=2];
-node15 -> node19 [color=green, weight=2];
-node19 -> node20 [color=green, weight=2];
-node19 -> node21 [color=green, weight=2];
+node13 -> node14 [color=green, weight=2];
+node13 -> node15 [color=green, weight=2];
+node12 -> node16 [color=green, weight=2];
+node11 -> node17 [color=green, weight=2];
+node10 -> node18 [color=green, weight=2];
 }

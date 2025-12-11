@@ -128,7 +128,7 @@ TreeErr CalculateTree(Tree* tree) {
 
     AskVars(tree);
 
-    printf(GREEN "\n%.3g\n" RESET, CalculateNode(tree, tree->root_node_ptr));
+    printf(GREEN "\n%.5lg\n" RESET, CalculateNode(tree, tree->root_node_ptr));
 
     return Ok;
 }
@@ -159,7 +159,7 @@ static TreeNode* Differenciate(Tree* tree, TreeNode* node, size_t var_ind, FILE*
         MakeTexFromSubtree(tree, node, file);
         fprintf(file, "\\right) = ");
     }
-
+    printf("r");
     switch (node->value_type) {
         case Op:
             switch (node->data.op) {
@@ -483,6 +483,14 @@ void FillTreeWithOrederedDiff(Tree* ordered_diff_tree, Tree* tree, size_t diff_n
         KillTree(&temp_tree);
     }
 
+    if (file) {
+        fprintf(file, "\\section{Let's refresh our knoewledge about the function}\n");
+        fprintf(file, "\\subsection{Function:}\n");
+        AddTreeToTexFile(tree, file);
+        fprintf(file, "\\subsection{It's %lu derivative:}\n", diff_number);
+        AddTreeToTexFile(ordered_diff_tree, file);
+    }
+
     //TreeDump(ordered_diff_tree, HTMLFileMode, "Func: %s\nDifferenciated %lu times tree\n", __func__, diff_number);
 }
 
@@ -609,7 +617,7 @@ void TaylorResearch(Tree* tailor_tree, Tree* tree, size_t var_x_ind,
     
     MakeTreeEasy(&temp_coefficient_taylor);
 
-    fprintf(file, "\\subsection{This is taylor's form with first %lu summants around point %.3g}\n", tailor_number, x_0_val);
+    fprintf(file, "\\subsection{This is taylor's form with first %lu summants around point %.5lg}\n", tailor_number, x_0_val);
     AddTreeToTexFile(&temp_coefficient_taylor, file); 
 
 
@@ -638,7 +646,7 @@ void TaylorResearch(Tree* tailor_tree, Tree* tree, size_t var_x_ind,
 
 
     fprintf(for_gnuplot,
-        "set terminal pngcairo size 600,400 enhanced font 'Verdana,10'\n"
+        "set terminal pngcairo size 600,400 enhanced font 'Times,10'\n"
         "set output 'tex_graph.png'\n"
         "set grid\n"
         "set xlabel 'x'\n"

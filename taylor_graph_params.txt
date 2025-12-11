@@ -1,0 +1,5 @@
+Taylor last summant's power: 7
+Taylor starting point: 4
+xmin: 3.992
+xmax: 4.008
+step: 0.0005

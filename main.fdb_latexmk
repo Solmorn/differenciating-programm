@@ -1,0 +1,14 @@
+# Fdb version 4
+["pdflatex"] 1765461865.54061 "/mnt/c/Users/Лана/DED/differenciator/main.tex" "main.pdf" "main" 1765461865.87105 2
+  "/etc/texmf/web2c/texmf.cnf" 1763591903.09294 475 c0e671620eb5563b2130f56340a5fde8 ""
+  "/mnt/c/Users/Лана/DED/differenciator/main.tex" 1765461707.92044 0 d41d8cd98f00b204e9800998ecf8427e ""
+  "/usr/share/texlive/texmf-dist/web2c/texmf.cnf" 1707919699 40399 f2c302f7d2af602abb742093540a5834 ""
+  "/usr/share/texmf/web2c/texmf.cnf" 1707919699 40399 f2c302f7d2af602abb742093540a5834 ""
+  "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1764848743 6878392 badb9a186f0f6772e242e00114cf609f ""
+  "main.aux" 1765461866.00182 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
+  "main.tex" 1765461707.92044 0 d41d8cd98f00b204e9800998ecf8427e ""
+  (generated)
+  "main.aux"
+  "main.log"
+  "main.pdf"
+  (rewritten before read)
