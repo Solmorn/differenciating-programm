@@ -261,7 +261,7 @@ void MakeTexFromSubtree(Tree* tree, TreeNode* node, FILE* file) {
             fprintf(file, "%.*s", tree->vars[node->data.var_ind].name_length, tree->vars[node->data.var_ind].name);
             break;
         case Num:
-            fprintf(file, "%.2lf", node->data.num);
+            fprintf(file, "%.3lg", node->data.num);
             break;
         case NoType:
             break;
